@@ -2,6 +2,7 @@
 
 usage() {
   echo "Usage: volume-backup <backup|restore> <archive>"
+  exit
 }
 
 backup() {
