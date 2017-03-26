@@ -1,3 +1,5 @@
-FROM python:onbuild
+FROM alpine
 
-ENTRYPOINT [ "python", "./volume-backup.py" ]
+COPY volume-backup.sh /
+
+ENTRYPOINT [ "/bin/sh", "/volume-backup.sh" ]
