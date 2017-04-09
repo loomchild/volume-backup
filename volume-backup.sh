@@ -6,6 +6,7 @@ usage() {
 }
 
 backup() {
+    mkdir -p `dirname /backup/$ARCHIVE`
     tar -cjf /backup/$ARCHIVE -C /volume ./
 }
 
