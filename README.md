@@ -8,11 +8,11 @@ An utility to backup and restore [docker volumes](https://docs.docker.com/engine
 
 Syntax:
 
-    docker run -v [volume-name]:/volume -v [output-dir]:/backup loomchild/volume-backup backup [archive-name]
+    docker run -v [volume-name]:/volume -v [output-dir]:/backup --rm loomchild/volume-backup backup [archive-name]
 
 For example:
 
-    docker run -v some_volume:/volume -v /tmp:/backup loomchild/volume-backup backup archive1
+    docker run -v some_volume:/volume -v /tmp:/backup --rm loomchild/volume-backup backup archive1
 
 will archive volume named `some_volume` to `/tmp/archive.tar.bz2` archive file.
 
@@ -22,10 +22,10 @@ will archive volume named `some_volume` to `/tmp/archive.tar.bz2` archive file.
 
 Syntax:
 
-    docker run -v [volume-name]:/volume -v [output-dir]:/backup loomchild/volume-backup restore [archive-name]
+    docker run -v [volume-name]:/volume -v [output-dir]:/backup --rm loomchild/volume-backup restore [archive-name]
 
 For example:
 
-    docker run -v some_volume:/volume -v /tmp:/backup loomchild/volume-backup restore archive1
+    docker run -v some_volume:/volume -v /tmp:/backup --rm loomchild/volume-backup restore archive1
 
 will clean and restore volume named `some_volume` from `/tmp/archive.tar.bz2` archive file.
