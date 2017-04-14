@@ -20,6 +20,11 @@ restore() {
     tar -C /volume/ -xjf /backup/$ARCHIVE
 }
 
+# Needed because sometimes pty is not ready when executing docker-compose run
+# See https://github.com/docker/compose/pull/4738 for more details
+# TODO: remove after above pull request or equivalent is merged
+sleep 1
+
 if [ $# -ne 2 ]; then
     usage
 fi
