@@ -16,7 +16,9 @@ For example:
 
 will archive volume named `some_volume` to `/tmp/some_archive.tar.bz2` archive file.
 
-It's also possible to backup a volume to standard output, which avoids mounting a second backup volume and allows to redirect it to a file, network, etc.
+### Backup to standard output
+
+This avoids mounting a second backup volume and allows to redirect it to a file, network, etc.
 
 Syntax:
 
@@ -42,7 +44,9 @@ For example:
 
 will clean and restore volume named `some_volume` from `/tmp/some_archive.tar.bz2` archive file.
 
-It's also possible to restore a volume from standard input, which avoids mounting a second backup volume.
+### Restore from standard input
+
+This avoids mounting a second backup volume.
 
 **Note**: Don't forget the `-i` switch for interactive operation.
 
