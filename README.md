@@ -12,9 +12,21 @@ Syntax:
 
 For example:
 
-    docker run -v some_volume:/volume -v /tmp:/backup --rm loomchild/volume-backup backup archive1
+    docker run -v some_volume:/volume -v /tmp:/backup --rm loomchild/volume-backup backup some_archive
 
-will archive volume named `some_volume` to `/tmp/archive.tar.bz2` archive file.
+will archive volume named `some_volume` to `/tmp/some_archive.tar.bz2` archive file.
+
+It's also possible to backup a volume to standard output, which avoids mounting a second backup volume and allows to redirect it to a file, network, etc.
+
+Syntax:
+
+    docker run -v [volume-name]:/volume --rm loomchild/volume-backup backup - > [archive-name]
+
+For example:
+
+    docker run -v some_volume:/volume --rm loomchild/volume-backup backup - > some_archive.tar.bz2
+
+will archive volume named `some_volume` to `some_archive.tar.bz2` archive file.
 
 ## Restore
 
@@ -26,6 +38,20 @@ Syntax:
 
 For example:
 
-    docker run -v some_volume:/volume -v /tmp:/backup --rm loomchild/volume-backup restore archive1
+    docker run -v some_volume:/volume -v /tmp:/backup --rm loomchild/volume-backup restore some_archive
 
-will clean and restore volume named `some_volume` from `/tmp/archive.tar.bz2` archive file.
+will clean and restore volume named `some_volume` from `/tmp/some_archive.tar.bz2` archive file.
+
+It's also possible to restore a volume from standard input, which avoids mounting a second backup volume.
+
+**Note**: Don't forget the `-i` switch for interactive operation.
+
+Syntax:
+
+    cat [archive-name] | docker run -i -v [volume-name]:/volume --rm loomchild/volume-backup restore -
+
+For example:
+
+    cat some_archive.tar.bz2 | docker run -i -v some_volume:/volume --rm loomchild/volume-backup restore -
+
+will clean and restore volume named `some_volume` from `some_archive.tar.bz2` archive file.
