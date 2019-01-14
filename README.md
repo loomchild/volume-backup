@@ -20,6 +20,8 @@ will archive volume named `some_volume` to `/tmp/some_archive.tar.bz2` archive f
 
 This avoids mounting a second backup volume and allows to redirect it to a file, network, etc.
 
+**WARNING**: This method should not be used with a Docker for Windows installation; no usable backup will be generated.
+
 Syntax:
 
     docker run -v [volume-name]:/volume --rm loomchild/volume-backup backup - > [archive-name]
@@ -49,6 +51,8 @@ will clean and restore volume named `some_volume` from `/tmp/some_archive.tar.bz
 This avoids mounting a second backup volume.
 
 **Note**: Don't forget the `-i` switch for interactive operation.
+
+**WARNING**: This method should not be used with a Docker for Windows installation; no usable backup will be generated.
 
 Syntax:
 
