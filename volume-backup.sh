@@ -1,7 +1,7 @@
 #!/bin/sh
 
 usage() {
-  echo "Usage: volume-backup <backup|restore> <archive>"
+  echo "Usage: volume-backup <backup|restore> <archive or - for stdin/stdout>"
   exit
 }
 
