@@ -1,8 +1,8 @@
 #!/bin/sh
 
 usage() {
-  echo "Usage: volume-backup <backup|restore> <archive or - for stdin/stdout>"
-  exit
+  >&2 echo "Usage: volume-backup <backup|restore> <archive or - for stdin/stdout>"
+  exit 1
 }
 
 backup() {
@@ -16,7 +16,7 @@ backup() {
 restore() {
     if ! [ "$ARCHIVE" == "-" ]; then
         if ! [ -e $ARCHIVE_PATH ]; then
-            echo "Archive file $ARCHIVE does not exist"
+            >&2 echo "Archive file $ARCHIVE does not exist"
             exit 1
         fi
     fi
