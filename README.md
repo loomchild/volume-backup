@@ -67,9 +67,11 @@ will clean and restore volume named `some_volume` from `some_archive.tar.bz2` ar
 ### Miscellaneous
 
 1. Upgrade / update volume-backup
-
+    ```
     docker pull loomchild/volume-backup
+    ```
 
 1. Find all containers using a volume (to stop them before backing-up)
-
+    ```
     docker ps -a --filter volume=[volume-name]
+    ```
