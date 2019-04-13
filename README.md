@@ -2,7 +2,7 @@
 
 An utility to backup and restore [docker volumes](https://docs.docker.com/engine/reference/commandline/volume/). 
 
-**Note**: Make sure no container is using the volume before backup or restore, otherwise your data might be damaged.
+**Note**: Make sure no container is using the volume before backup or restore, otherwise your data might be damaged. See [Miscellaneous](#miscellaneous) for instructions.
 
 ## Backup
 
@@ -63,3 +63,13 @@ For example:
     cat some_archive.tar.bz2 | docker run -i -v some_volume:/volume --rm loomchild/volume-backup restore -
 
 will clean and restore volume named `some_volume` from `some_archive.tar.bz2` archive file.
+
+### Miscellaneous
+
+1. Upgrade / update volume-backup
+
+    docker pull loomchild/volume-backup
+
+1. Find all containers using a volume (to stop them before backing-up)
+
+    docker ps -a --filter volume=[volume-name]
