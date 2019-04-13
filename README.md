@@ -76,7 +76,7 @@ will clean and restore volume named `some_volume` from `some_archive.tar.bz2` ar
     docker ps -a --filter volume=[volume-name]
     ```
 
-1. Exclude some files from the backup and output archive to stdout
+1. Exclude some files from the backup and send the archive to stdout
     ```
     docker run -v [volume-name]:/volume --rm loomchild/volume-backup backup -e [excluded-glob] - > [archive-name]
     ```
