@@ -6,21 +6,9 @@ An utility to backup and restore [docker volumes](https://docs.docker.com/engine
 
 ## Backup
 
-Syntax:
-
-    docker run -v [volume-name]:/volume -v [output-dir]:/backup --rm loomchild/volume-backup backup [archive-name]
-
-For example:
-
-    docker run -v some_volume:/volume -v /tmp:/backup --rm loomchild/volume-backup backup some_archive
-
-will archive volume named `some_volume` to `/tmp/some_archive.tar.bz2` archive file.
-
-### Backup to standard output
+### To standard output
 
 This avoids mounting a second backup volume and allows to redirect it to a file, network, etc.
-
-**WARNING**: This method should not be used with a Docker for Windows installation; no usable backup will be generated.
 
 Syntax:
 
@@ -32,27 +20,29 @@ For example:
 
 will archive volume named `some_volume` to `some_archive.tar.bz2` archive file.
 
-## Restore
+**WARNING**: This method should not be used with a Docker for Windows installation; no usable backup will be generated.
 
-**Note**: This operation will delete all contents of the volume
+### To a file
 
 Syntax:
 
-    docker run -v [volume-name]:/volume -v [output-dir]:/backup --rm loomchild/volume-backup restore [archive-name]
+    docker run -v [volume-name]:/volume -v [output-dir]:/backup --rm loomchild/volume-backup backup [archive-name]
 
 For example:
 
-    docker run -v some_volume:/volume -v /tmp:/backup --rm loomchild/volume-backup restore some_archive
+    docker run -v some_volume:/volume -v /tmp:/backup --rm loomchild/volume-backup backup some_archive
 
-will clean and restore volume named `some_volume` from `/tmp/some_archive.tar.bz2` archive file.
+will archive volume named `some_volume` to `/tmp/some_archive.tar.bz2` archive file.
+
+## Restore
+
+**WARNING**: This operation will delete all contents of the volume
 
 ### Restore from standard input
 
 This avoids mounting a second backup volume.
 
-**Note**: Don't forget the `-i` switch for interactive operation.
-
-**WARNING**: This method should not be used with a Docker for Windows installation; no usable backup will be generated.
+*NOTE*: Don't forget the `-i` switch for interactive operation.
 
 Syntax:
 
@@ -64,7 +54,21 @@ For example:
 
 will clean and restore volume named `some_volume` from `some_archive.tar.bz2` archive file.
 
-### Miscellaneous
+**WARNING**: This method should not be used with a Docker for Windows installation; no usable backup will be generated.
+
+### From a file
+
+Syntax:
+
+    docker run -v [volume-name]:/volume -v [output-dir]:/backup --rm loomchild/volume-backup restore [archive-name]
+
+For example:
+
+    docker run -v some_volume:/volume -v /tmp:/backup --rm loomchild/volume-backup restore some_archive
+
+will clean and restore volume named `some_volume` from `/tmp/some_archive.tar.bz2` archive file.
+
+## Miscellaneous
 
 1. Upgrade / update volume-backup
     ```
