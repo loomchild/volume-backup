@@ -1,8 +1,10 @@
 #!/bin/sh
 
 usage() {
-  >&2 echo "Usage: volume-backup <backup|restore> <archive or - for stdin/stdout>"
-  exit 1
+  >&2 echo "Usage: volume-backup <backup|restore> [options] <archive or - for stdin/stdout>"
+  >&2 echo ""
+  >&2 echo "Options:"
+  >&2 echo "  -e <glob> exclude files or directories (only for backup operation)"
 }
 
 backup() {
@@ -15,7 +17,7 @@ backup() {
         mkdir -p `dirname /backup/$ARCHIVE`
     fi
 
-    tar -cjf $ARCHIVE_PATH -C /volume ./
+    tar -cjf $ARCHIVE_PATH -C /volume $TAROPTS ./
 }
 
 restore() {
@@ -27,7 +29,7 @@ restore() {
     fi
 
     rm -rf /volume/* /volume/..?* /volume/.[!.]*
-    tar -C /volume/ -xjf $ARCHIVE_PATH
+    tar -C /volume/ -xjf $TAROPTS $ARCHIVE_PATH
 }
 
 # Needed because sometimes pty is not ready when executing docker-compose run
@@ -35,17 +37,39 @@ restore() {
 # TODO: remove after above pull request or equivalent is merged
 sleep 1
 
-if [ $# -ne 2 ]; then
-    usage
-fi
-
 OPERATION=$1
 
-if [ "$2" == "-" ]; then
-    ARCHIVE=$2
+TAROPTS=""
+
+OPTIND=2
+
+while getopts "h?e:" OPTION; do
+    case "$OPTION" in
+    h|\?)
+        usage
+        exit 0
+        ;;
+    e)  if [ -z "$OPTARG" -o "$OPERATION" != "backup" ]; then
+          usage
+          exit 1
+        fi
+        TAROPTS="$TAROPTS --exclude $OPTARG"
+        ;;
+    esac
+done
+
+shift $((OPTIND - 1))
+
+if [ $# -lt 1 ]; then
+    usage
+    exit 1
+fi
+
+if [ "$1" == "-" ]; then
+    ARCHIVE=$1
     ARCHIVE_PATH=$ARCHIVE
 else
-    ARCHIVE=${2%%.tar.bz2}.tar.bz2
+    ARCHIVE=${1%%.tar.bz2}.tar.bz2
     ARCHIVE_PATH=/backup/$ARCHIVE
 fi
 
