@@ -84,3 +84,8 @@ will clean and restore volume named `some_volume` from `/tmp/some_archive.tar.bz
     ```
     docker run -v [volume-name]:/volume --rm loomchild/volume-backup backup -e [excluded-glob] - > [archive-name]
     ```
+
+1. Use different compression algorithm for better performance
+    ```
+    docker run -v [volume-name]:/volume --rm loomchild/volume-backup backup -c gz - > [archive-name]
+    ```

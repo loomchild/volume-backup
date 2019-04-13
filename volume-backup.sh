@@ -4,6 +4,7 @@ usage() {
   >&2 echo "Usage: volume-backup <backup|restore> [options] <archive or - for stdin/stdout>"
   >&2 echo ""
   >&2 echo "Options:"
+  >&2 echo "  -c <algorithm> chooose compression algorithm: bz2 (default), gz and 0 (none)"
   >&2 echo "  -e <glob> exclude files or directories (only for backup operation)"
 }
 
@@ -17,7 +18,7 @@ backup() {
         mkdir -p `dirname /backup/$ARCHIVE`
     fi
 
-    tar -cjf $ARCHIVE_PATH -C /volume $TAROPTS ./
+    tar -C /volume $TAROPTS -cf $ARCHIVE_PATH ./
 }
 
 restore() {
@@ -29,7 +30,7 @@ restore() {
     fi
 
     rm -rf /volume/* /volume/..?* /volume/.[!.]*
-    tar -C /volume/ -xjf $TAROPTS $ARCHIVE_PATH
+    tar -C /volume/ $TAROPTS -xf $ARCHIVE_PATH
 }
 
 # Needed because sometimes pty is not ready when executing docker-compose run
@@ -40,16 +41,25 @@ sleep 1
 OPERATION=$1
 
 TAROPTS=""
+COMPRESSION="bz2"
 
 OPTIND=2
 
-while getopts "h?e:" OPTION; do
+while getopts "h?c:e:" OPTION; do
     case "$OPTION" in
     h|\?)
         usage
         exit 0
         ;;
-    e)  if [ -z "$OPTARG" -o "$OPERATION" != "backup" ]; then
+    c)  
+        if [ -z "$OPTARG" ]; then
+          usage
+          exit 1
+        fi
+        COMPRESSION=$OPTARG
+        ;;
+    e)  
+        if [ -z "$OPTARG" -o "$OPERATION" != "backup" ]; then
           usage
           exit 1
         fi
@@ -65,11 +75,29 @@ if [ $# -lt 1 ]; then
     exit 1
 fi
 
+case "$COMPRESSION" in
+bz2)
+      TAROPTS="$TAROPTS -j"
+      EXTENSION=.tar.bz2
+      ;;
+gz)
+      TAROPTS="$TAROPTS -z"
+      EXTENSION=.tar.gz
+      ;;
+none|0)
+      EXTENSION=.tar
+      ;;
+*)
+      usage
+      exit 1
+      ;;
+esac
+
 if [ "$1" == "-" ]; then
     ARCHIVE=$1
     ARCHIVE_PATH=$ARCHIVE
 else
-    ARCHIVE=${1%%.tar.bz2}.tar.bz2
+    ARCHIVE=${1%%$EXTENSION}$EXTENSION
     ARCHIVE_PATH=/backup/$ARCHIVE
 fi
 
