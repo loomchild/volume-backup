@@ -6,7 +6,7 @@ An utility to backup and restore [docker volumes](https://docs.docker.com/engine
 
 ## Backup
 
-### To standard output
+### Backup to standard output
 
 This avoids mounting a second backup volume and allows to redirect it to a file, network, etc.
 
@@ -22,7 +22,7 @@ will archive volume named `some_volume` to `some_archive.tar.bz2` archive file.
 
 **WARNING**: This method should not be used with a Docker for Windows installation; no usable backup will be generated.
 
-### To a file
+### Backup to a file
 
 Syntax:
 
@@ -56,7 +56,7 @@ will clean and restore volume named `some_volume` from `some_archive.tar.bz2` ar
 
 **WARNING**: This method should not be used with a Docker for Windows installation; no usable backup will be generated.
 
-### From a file
+### Restore from a file
 
 Syntax:
 
