@@ -20,7 +20,7 @@ For example:
 
 will archive volume named `some_volume` to `some_archive.tar.bz2` archive file.
 
-**WARNING**: This method should not be used with a Docker for Windows installation; no usable backup will be generated.
+**WARNING**: This method should not be used under PowerShell on Windows as no usable backup will be generated.
 
 ### Backup to a file
 
@@ -53,8 +53,6 @@ For example:
     cat some_archive.tar.bz2 | docker run -i -v some_volume:/volume --rm loomchild/volume-backup restore -
 
 will clean and restore volume named `some_volume` from `some_archive.tar.bz2` archive file.
-
-**WARNING**: This method should not be used with a Docker for Windows installation; no usable backup will be generated.
 
 ### Restore from a file
 
