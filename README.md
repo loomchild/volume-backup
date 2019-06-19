@@ -66,6 +66,22 @@ For example:
 
 will clean and restore volume named `some_volume` from `/tmp/some_archive.tar.bz2` archive file.
 
+### Copy volume between hosts
+
+One good example of how you can use the output to stdout would be directly migrating the volume to a new host
+
+Syntax:
+
+    docker run -v [volume-name]:/volume --rm loomchild/volume-backup backup - |\
+         ssh [receiver] docker run -i -v [volume-name]:/volume --rm loomchild/volume-backup restore -
+
+*Note* In case there are no traffic limitations between the hosts you can trade CPU time for bandwidth by turning off compression as shown in the example below.
+
+For example:
+
+    docker run -v some_volume:/volume --rm loomchild/volume-backup backup -c none - |\
+         ssh user@new.machine docker run -i -v some_volume:/volume --rm loomchild/volume-backup restore -c none -
+    
 ## Miscellaneous
 
 1. Upgrade / update volume-backup
