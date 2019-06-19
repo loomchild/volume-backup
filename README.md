@@ -68,14 +68,14 @@ will clean and restore volume named `some_volume` from `/tmp/some_archive.tar.bz
 
 ### Copy volume between hosts
 
-One good example of how you can use the output to stdout is directly migrating the volume to a new host
+One good example of how you can use the output to stdout would be directly migrating the volume to a new host
 
 Syntax:
 
     docker run -v [volume-name]:/volume --rm loomchild/volume-backup backup - |\
          ssh [receiver] docker run -i -v [volume-name]:/volume --rm loomchild/volume-backup restore -
 
-*Note* In case traffic is not an issue it is recommended to turn of compression for this process
+*Note* In case there are no traffic limitations between the hosts you can trade CPU time for bandwidth by turning off compression as shown in the example below.
 
 For example:
 
