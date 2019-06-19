@@ -42,7 +42,7 @@ will archive volume named `some_volume` to `/tmp/some_archive.tar.bz2` archive f
 
 This avoids mounting a second backup volume.
 
-*NOTE*: Don't forget the `-i` switch for interactive operation.
+**Note**: Don't forget the `-i` switch for interactive operation.
 
 Syntax:
 
@@ -75,7 +75,7 @@ Syntax:
     docker run -v [volume-name]:/volume --rm loomchild/volume-backup backup - |\
          ssh [receiver] docker run -i -v [volume-name]:/volume --rm loomchild/volume-backup restore -
 
-*Note* In case there are no traffic limitations between the hosts you can trade CPU time for bandwidth by turning off compression as shown in the example below.
+**Note**: In case there are no traffic limitations between the hosts you can trade CPU time for bandwidth by turning off compression as shown in the example below.
 
 For example:
 
