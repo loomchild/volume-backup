@@ -41,7 +41,7 @@ sleep 1
 OPERATION=$1
 
 TAROPTS=""
-COMPRESSION="bz2"
+COMPRESSION="xz"
 
 OPTIND=2
 
@@ -76,6 +76,10 @@ if [ $# -lt 1 ]; then
 fi
 
 case "$COMPRESSION" in
+xz)
+      TAROPTS="$TAROPTS -J"
+      EXTENSION=.tar.xz
+      ;;
 bz2)
       TAROPTS="$TAROPTS -j"
       EXTENSION=.tar.bz2
