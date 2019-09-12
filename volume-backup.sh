@@ -4,7 +4,7 @@ usage() {
   >&2 echo "Usage: volume-backup <backup|restore> [options] <archive or - for stdin/stdout>"
   >&2 echo ""
   >&2 echo "Options:"
-  >&2 echo "  -c <algorithm> chooose compression algorithm: bz2 (default), gz and 0 (none)"
+  >&2 echo "  -c <algorithm> chooose compression algorithm: bz2 (default), gz, xz and 0 (none)"
   >&2 echo "  -e <glob> exclude files or directories (only for backup operation)"
 }
 
@@ -76,6 +76,10 @@ if [ $# -lt 1 ]; then
 fi
 
 case "$COMPRESSION" in
+xz)
+      TAROPTS="$TAROPTS -J"
+      EXTENSION=.tar.xz
+      ;;
 bz2)
       TAROPTS="$TAROPTS -j"
       EXTENSION=.tar.bz2

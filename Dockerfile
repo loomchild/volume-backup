@@ -1,6 +1,6 @@
 FROM alpine
 
-RUN apk update && apk add --no-cache dumb-init
+RUN apk update && apk add --no-cache dumb-init xz
 
 COPY volume-backup.sh /
 
