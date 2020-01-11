@@ -103,3 +103,7 @@ For example:
     ```
     docker run -v [volume-name]:/volume --rm loomchild/volume-backup backup -c gz - > [archive-name]
     ```
+1. Show simple progress indicator using verbose `-v` flag (works both for backup and restore)
+    ```
+    docker run -v [volume-name]:/volume --rm loomchild/volume-backup backup -v > [archive-name]
+    ```
