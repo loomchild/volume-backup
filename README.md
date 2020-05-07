@@ -26,11 +26,11 @@ will archive volume named `some_volume` to `some_archive.tar.bz2` archive file.
 
 Syntax:
 
-    docker run -v [volume-name]:/volume -v [output-dir]:/backup --rm loomchild/volume-backup backup [archive-name]
+    docker run -v [volume-name]:/volume -v [output-dir]:/backup --rm -e USER=$UID loomchild/volume-backup backup [archive-name]
 
 For example:
 
-    docker run -v some_volume:/volume -v /tmp:/backup --rm loomchild/volume-backup backup some_archive
+    docker run -v some_volume:/volume -v /tmp:/backup --rm -e USER=$UID loomchild/volume-backup backup some_archive
 
 will archive volume named `some_volume` to `/tmp/some_archive.tar.bz2` archive file.
 
@@ -81,7 +81,7 @@ For example:
 
     docker run -v some_volume:/volume --rm loomchild/volume-backup backup -c none - |\
          ssh user@new.machine docker run -i -v some_volume:/volume --rm loomchild/volume-backup restore -c none -
-    
+
 ## Miscellaneous
 
 1. Upgrade / update volume-backup

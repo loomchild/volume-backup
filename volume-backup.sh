@@ -20,6 +20,11 @@ backup() {
     fi
 
     tar -C /volume $TAROPTS -cf $ARCHIVE_PATH ./
+	
+	if [[ ! -z "$USER" ]]; then
+       chown -Rf ${USER}:${USER} $ARCHIVE_PATH
+    fi
+	
 }
 
 restore() {
