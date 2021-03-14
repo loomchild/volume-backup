@@ -93,6 +93,10 @@ gz)
       TAROPTS="$TAROPTS -z"
       EXTENSION=.tar.gz
       ;;
+zstd)
+      TAROPTS="$TAROPTS -I zstd"
+      EXTENSION=.tar.zstd
+      ;;
 none|0)
       EXTENSION=.tar
       ;;
