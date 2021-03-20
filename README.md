@@ -3,6 +3,7 @@
 An utility to backup and restore [docker volumes](https://docs.docker.com/engine/reference/commandline/volume/). For more info, read my article on [Medium](https://medium.com/@jareklipski/backup-restore-docker-named-volumes-350397b8e362)
 
 **Note**: Make sure no container is using the volume before backup or restore, otherwise your data might be damaged. See [Miscellaneous](#miscellaneous) for instructions.
+**Note**: When using docker-compose, make sure to backup and restore volume labels. See [Miscellaneous](#miscellaneous) for more information.
 
 ## Backup
 
@@ -107,10 +108,8 @@ For example:
     ```
     docker run -v [volume-name]:/volume --rm loomchild/volume-backup backup -v > [archive-name]
     ```
-
 1. Pass additional arguments to the Tar utility using `-x` option
     ```
     docker run -v [volume-name]:/volume --rm loomchild/volume-backup backup -x --verbose > [archive-name]
     ```
-
-
+1. Volume labels are not backed-up or restored automatically, but they might be required for your application to work (e.g. when using docker-compose). If you need to preserve them, create a label backup file as follows: `docker inspect [volume-name] -f "{{json .Labels}}" > labels.json`. When restoring your data, target volume needs to be created manually with labels before launching the restore script: `docker volume create --label "label1" --label "label2" [volume-name]`.
