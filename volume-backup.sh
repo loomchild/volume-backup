@@ -6,8 +6,9 @@ usage() {
   >&2 echo "Options:"
   >&2 echo "  -c <algorithm> chooose compression algorithm: bz2 (default), gz, xz, zstd and 0 (none)"
   >&2 echo "  -e <glob> exclude files or directories (only for backup operation)"
-  >&2 echo "  -v verbose"
+  >&2 echo "  -f force overwrite even if target volume is not empty during restore"
   >&2 echo "  -x <args> pass additional arguments to the Tar utility"
+  >&2 echo "  -v verbose"
 }
 
 backup() {
@@ -31,6 +32,12 @@ restore() {
         fi
     fi
 
+
+    if ! [ -z "$(ls -A /volume)" -o -n "$FORCE" ]; then
+        >&2 echo "Target volume is not empty, aborting; use -f to override"
+        exit 1
+    fi
+
     rm -rf /volume/* /volume/..?* /volume/.[!.]*
     tar -C /volume/ $TAROPTS -xf $ARCHIVE_PATH
 }
@@ -44,10 +51,11 @@ OPERATION=$1
 
 TAROPTS=""
 COMPRESSION="bz2"
+FORCE=""
 
 OPTIND=2
 
-while getopts "h?vc:e:x:" OPTION; do
+while getopts "h?vfc:e:x:" OPTION; do
     case "$OPTION" in
     h|\?)
         usage
@@ -67,6 +75,13 @@ while getopts "h?vc:e:x:" OPTION; do
         fi
         TAROPTS="$TAROPTS --exclude $OPTARG"
         ;;
+    f)
+        if [ "$OPERATION" != "restore" ]; then
+          usage
+          exit 1
+        fi
+        FORCE=1
+        ;;
     v)
         TAROPTS="$TAROPTS --checkpoint=.1000"
         EOLN=1
@@ -77,6 +92,7 @@ while getopts "h?vc:e:x:" OPTION; do
           exit 1
         fi
         TAROPTS="$TAROPTS $OPTARG"
+        ;;
     esac
 done
 

@@ -36,7 +36,7 @@ will archive volume named `some_volume` to `/tmp/some_archive.tar.bz2` archive f
 
 ## Restore
 
-**WARNING**: This operation will delete all contents of the volume
+Restore will fail if the target volume is not empty (use `-f` flag to override).
 
 ### Restore from standard input
 
