@@ -42,11 +42,6 @@ restore() {
     tar -C /volume/ $TAROPTS -xf $ARCHIVE_PATH
 }
 
-# Needed because sometimes pty is not ready when executing docker-compose run
-# See https://github.com/docker/compose/pull/4738 for more details
-# TODO: remove after above pull request or equivalent is merged
-sleep 1
-
 OPERATION=$1
 
 TAROPTS=""
