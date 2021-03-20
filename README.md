@@ -107,3 +107,10 @@ For example:
     ```
     docker run -v [volume-name]:/volume --rm loomchild/volume-backup backup -v > [archive-name]
     ```
+
+1. Pass additional arguments to the Tar utility using `-x` option
+    ```
+    docker run -v [volume-name]:/volume --rm loomchild/volume-backup backup -x --verbose > [archive-name]
+    ```
+
+

@@ -7,6 +7,7 @@ usage() {
   >&2 echo "  -c <algorithm> chooose compression algorithm: bz2 (default), gz, xz, zstd and 0 (none)"
   >&2 echo "  -e <glob> exclude files or directories (only for backup operation)"
   >&2 echo "  -v verbose"
+  >&2 echo "  -x <args> pass additional arguments to the Tar utility"
 }
 
 backup() {
@@ -46,7 +47,7 @@ COMPRESSION="bz2"
 
 OPTIND=2
 
-while getopts "h?vc:e:" OPTION; do
+while getopts "h?vc:e:x:" OPTION; do
     case "$OPTION" in
     h|\?)
         usage
@@ -70,6 +71,12 @@ while getopts "h?vc:e:" OPTION; do
         TAROPTS="$TAROPTS --checkpoint=.1000"
         EOLN=1
         ;;
+    x)
+        if [ -z "$OPTARG" ]; then
+          usage
+          exit 1
+        fi
+        TAROPTS="$TAROPTS $OPTARG"
     esac
 done
 
