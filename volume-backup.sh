@@ -112,7 +112,11 @@ gz)
       EXTENSION=.tar.gz
       ;;
 zstd)
-      TAROPTS="$TAROPTS -I zstd"
+      if [ "$OPERATION" == "backup" ]; then
+        TAROPTS="$TAROPTS -I zstd"
+      elif [ "$OPERATION" == "restore" ]; then
+        TAROPTS="$TAROPTS -I unzstd"
+      fi
       EXTENSION=.tar.zstd
       ;;
 none|0)
