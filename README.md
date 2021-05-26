@@ -22,7 +22,7 @@ For example:
 
 will archive volume named `some_volume` to `some_archive.tar.bz2` archive file.
 
-*Note*: `--log-driver none` option is necessary to avoid storing an entire backup in a temporary stdout JSON file. More info: https://docs.docker.com/config/containers/logging/configure/, https://github.com/loomchild/volume-backup/issues/39. Thanks @pschonmann for raising this.
+*Note*: `--log-driver none` option is necessary to avoid storing an entire backup in a temporary stdout JSON file. More info in [Docker logging documentation](https://docs.docker.com/config/containers/logging/configure/) and in [this issue](https://github.com/loomchild/volume-backup/issues/39).
 
 **WARNING**: This method should not be used under PowerShell on Windows as no usable backup will be generated.
 
