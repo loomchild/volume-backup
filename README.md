@@ -96,7 +96,7 @@ For example:
     ```
     docker pull ghcr.io/loomchild/volume-backup
     ```
-    **Note**: you'll need to use ghcr.io/loomchild/volume-backup instead of just loomchild/volume-backup when running the utility.
+    **Note**: you'll need to write `ghcr.io/loomchild/volume-backup` instead of just `loomchild/volume-backup` when running the utility.
 
 1. Find all containers using a volume (to stop them before backing-up)
     ```
