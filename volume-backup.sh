@@ -115,10 +115,6 @@ zstd)
       TAROPTS="$TAROPTS -I zstd"
       EXTENSION=.tar.zstd
       ;;
-pbz2)
-      TAROPTS="$TAROPTS -I pbzip2"
-      EXTENSION=.tar.bz2
-      ;;
 none|0)
       EXTENSION=.tar
       ;;

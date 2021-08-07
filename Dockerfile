@@ -1,6 +1,6 @@
 FROM alpine
 
-RUN apk update && apk add --no-cache dumb-init xz tar zstd pbzip2
+RUN apk update && apk add --no-cache dumb-init xz tar zstd
 
 COPY volume-backup.sh /
 
