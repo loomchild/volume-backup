@@ -1,7 +1,9 @@
 name: publish-image
 
 on:
-    workflow_dispatch:
+  push:
+    branches:
+      - 'master'
 
 jobs:
     docker:
