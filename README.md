@@ -92,7 +92,8 @@ For example:
     ```
     docker pull loomchild/volume-backup
     ```
-    Alternatively volume-backup is also available from ghcr.io (GitHub container registry), to avoid DockerHub usage limits:
+
+1. volume-backup is also available from GitHub Container Registry (ghcr.io), to avoid DockerHub usage limits:
     ```
     docker pull ghcr.io/loomchild/volume-backup
     ```
