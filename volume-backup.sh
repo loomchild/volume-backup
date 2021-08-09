@@ -4,7 +4,7 @@ usage() {
   >&2 echo "Usage: volume-backup <backup|restore> [options] <archive or - for stdin/stdout>"
   >&2 echo ""
   >&2 echo "Options:"
-  >&2 echo "  -c <algorithm> chooose compression algorithm: bz2 (default), gz, xz, zstd and 0 (none)"
+  >&2 echo "  -c <algorithm> chooose compression algorithm: bz2 (default), gz, xz, pigz, zstd and 0 (none)"
   >&2 echo "  -e <glob> exclude files or directories (only for backup operation)"
   >&2 echo "  -f force overwrite even if target volume is not empty during restore"
   >&2 echo "  -x <args> pass additional arguments to the Tar utility"
@@ -109,6 +109,10 @@ bz2)
       ;;
 gz)
       TAROPTS="$TAROPTS -z"
+      EXTENSION=.tar.gz
+      ;;
+pigz)
+      TAROPTS="$TAROPTS -I pigz"
       EXTENSION=.tar.gz
       ;;
 zstd)

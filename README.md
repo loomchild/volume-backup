@@ -111,7 +111,7 @@ For example:
 
 1. Use different compression algorithm for better performance
     ```
-    docker run -v [volume-name]:/volume --rm --log-driver none loomchild/volume-backup backup -c gz - > [archive-name]
+    docker run -v [volume-name]:/volume --rm --log-driver none loomchild/volume-backup backup -c pigz - > [archive-name]
     ```
 1. Show simple progress indicator using verbose `-v` flag (works both for backup and restore)
     ```
