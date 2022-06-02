@@ -50,11 +50,11 @@ This avoids mounting a second backup volume.
 
 Syntax:
 
-    cat [archive-name] | docker run -i -v [volume-name]:/volume --rm loomchild/volume-backup restore -
+    docker run -i -v [volume-name]:/volume --rm loomchild/volume-backup restore - < [archive-name]
 
 For example:
 
-    cat some_archive.tar.bz2 | docker run -i -v some_volume:/volume --rm loomchild/volume-backup restore -
+    docker run -i -v some_volume:/volume --rm loomchild/volume-backup restore - < some_archive.tar.bz2
 
 will clean and restore volume named `some_volume` from `some_archive.tar.bz2` archive file.
 
