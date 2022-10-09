@@ -1,7 +1,7 @@
 #!/bin/bash
 
 usage() {
-  >&2 echo "Usage: volume-backup <backup|restore> [options] <archive or - for stdin/stdout>"
+  >&2 echo "Usage: volume-backup <backup|restore> [options]. Reads from stdin and writes to stdout. Can also read/write files (deprecated)."
   >&2 echo ""
   >&2 echo "Options:"
   >&2 echo "  -c <algorithm> chooose compression algorithm: bz2 (default), gz, xz, pigz, zstd and 0 (none)"
@@ -95,11 +95,6 @@ done
 
 shift $((OPTIND - 1))
 
-if [ $# -lt 1 ]; then
-    usage
-    exit 1
-fi
-
 case "$COMPRESSION" in
 xz)
       TAROPTS+=(-J)
@@ -130,8 +125,8 @@ none|0)
       ;;
 esac
 
-if [ "$1" == "-" ]; then
-    ARCHIVE=$1
+if [ -z "$1" ] || [ "$1" == "-" ]; then
+    ARCHIVE="-"
     ARCHIVE_PATH=$ARCHIVE
 else
     ARCHIVE=${1%%$EXTENSION}$EXTENSION
