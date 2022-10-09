@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 usage() {
   >&2 echo "Usage: volume-backup <backup|restore> [options] <archive or - for stdin/stdout>"
@@ -21,7 +21,7 @@ backup() {
         mkdir -p `dirname /backup/$ARCHIVE`
     fi
 
-    tar -C /volume $TAROPTS -cf $ARCHIVE_PATH ./
+    tar -C /volume "${TAROPTS[@]}" -cf $ARCHIVE_PATH ./
 }
 
 restore() {
@@ -39,12 +39,12 @@ restore() {
     fi
 
     rm -rf /volume/* /volume/..?* /volume/.[!.]*
-    tar -C /volume/ $TAROPTS -xf $ARCHIVE_PATH
+    tar -C /volume/ "${TAROPTS[@]}" -xf $ARCHIVE_PATH
 }
 
 OPERATION=$1
 
-TAROPTS=""
+TAROPTS=()
 COMPRESSION="bz2"
 FORCE=""
 
@@ -68,7 +68,7 @@ while getopts "h?vfc:e:x:" OPTION; do
           usage
           exit 1
         fi
-        TAROPTS="$TAROPTS --exclude $OPTARG"
+        TAROPTS+=(--exclude $OPTARG)
         ;;
     f)
         if [ "$OPERATION" != "restore" ]; then
@@ -78,7 +78,7 @@ while getopts "h?vfc:e:x:" OPTION; do
         FORCE=1
         ;;
     v)
-        TAROPTS="$TAROPTS --checkpoint=.1000"
+        TAROPTS+=(--checkpoint=.1000)
         EOLN=1
         ;;
     x)
@@ -86,7 +86,9 @@ while getopts "h?vfc:e:x:" OPTION; do
           usage
           exit 1
         fi
-        TAROPTS="$TAROPTS $OPTARG"
+        # Note: it doesn't support nested quotes, e.g. -x '-I "zstd -10"'
+        OPTARR=($OPTARG)
+        TAROPTS=(${TAROPTS[@]} ${OPTARR[@]})
         ;;
     esac
 done
@@ -100,23 +102,23 @@ fi
 
 case "$COMPRESSION" in
 xz)
-      TAROPTS="$TAROPTS -J"
+      TAROPTS+=(-J)
       EXTENSION=.tar.xz
       ;;
 bz2)
-      TAROPTS="$TAROPTS -j"
+      TAROPTS+=(-j)
       EXTENSION=.tar.bz2
       ;;
 gz)
-      TAROPTS="$TAROPTS -z"
+      TAROPTS+=(-z)
       EXTENSION=.tar.gz
       ;;
 pigz)
-      TAROPTS="$TAROPTS -I pigz"
+      TAROPTS+=(-I pigz)
       EXTENSION=.tar.gz
       ;;
 zstd)
-      TAROPTS="$TAROPTS -I zstd"
+      TAROPTS+=(-I "zstd --adapt")
       EXTENSION=.tar.zstd
       ;;
 none|0)
