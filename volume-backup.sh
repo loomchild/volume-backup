@@ -113,7 +113,7 @@ pigz)
       EXTENSION=.tar.gz
       ;;
 zstd)
-      TAROPTS+=(-I "zstd --adapt")
+      TAROPTS+=(-I zstd)
       EXTENSION=.tar.zstd
       ;;
 none|0)
