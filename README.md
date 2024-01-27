@@ -1,6 +1,8 @@
 # volume-backup
 
-An utility to backup and restore [docker volumes](https://docs.docker.com/engine/reference/commandline/volume/). For more info, read my article on [Medium](https://medium.com/@jareklipski/backup-restore-docker-named-volumes-350397b8e362)
+An utility to backup and restore [Docker volumes](https://docs.docker.com/storage/volumes/). For more info, read my article on [Medium](https://medium.com/@jareklipski/backup-restore-docker-named-volumes-350397b8e362).
+
+It works just as well with [Podman](https://podman.io/) volumes, just prefix each command with `podman` instead of `docker`.
 
 **Note**: Make sure no container is using the volume before backup or restore, otherwise your data might be damaged. See [Miscellaneous](#miscellaneous) for instructions.
 
