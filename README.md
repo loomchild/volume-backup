@@ -11,7 +11,7 @@ It works just as well with [Podman](https://podman.io/) volumes, just prefix eac
 > When using docker-compose, make sure to backup and restore volume labels. See [Miscellaneous](#miscellaneous) for more information.
 
 > [!TIP]
-> I am doing my best to keep this utility backwards-compatible. However, if you are using it in production environment and you want to be sure that it doesn't break with the future updates, request a specific image digest, e.g.: `docker run -v [volume-name]:/volume --rm --log-driver none loomchild/volume-backup@sha256:d598345843d8eb20e4b0da331d538eb9158b70bcaff56f7ba09f5ce1b6498019 backup > [archive-path]`. You can find the available digests on Docker Hub or GHCR.
+> I am doing my best to keep this utility backwards-compatible. However, if you are using it in production environment and you want to be sure that it doesn't break with the future updates, request a specific image digest, e.g.: `docker run -v [volume-name]:/volume --rm --log-driver none loomchild/volume-backup@sha256:d598345843d8eb20e4b0da331d538eb9158b70bcaff56f7ba09f5ce1b6498019 backup > [archive-path]`. You can find the last digest on Docker Hub or GHCR. Note that old unused images might get deleted.
 
 ## Backup
 
