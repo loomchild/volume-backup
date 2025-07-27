@@ -112,7 +112,6 @@ will clean and restore volume named `some_volume` from `/tmp/some_archive.tar.bz
     ```
     docker run -v [volume-name]:/volume --rm --log-driver none loomchild/volume-backup backup | ssh [receiver] docker run -i -v [volume-name]:/volume --rm loomchild/volume-backup restore
     ```
-> [!TIP]
-> In case there are no traffic limitations between the hosts you can trade CPU time for bandwidth by turning off compression via `-c none` option.
+    In case there are no traffic limitations between the hosts you can trade CPU time for bandwidth by turning off compression via `-c none` option.
 
 1. Volume labels are not backed-up or restored automatically, but they might be required for your application to work (e.g. when using `docker-compose`). If you need to preserve them, create a label backup file as follows: `docker inspect [volume-name] -f "{{json .Labels}}" > labels.json`. When restoring your data, target volume needs to be created manually with labels before launching the restore script: `docker volume create --label "label1" --label "label2" [volume-name]`.
