@@ -4,9 +4,11 @@ An utility to backup and restore [Docker volumes](https://docs.docker.com/storag
 
 It works just as well with [Podman](https://podman.io/) volumes, just prefix each command with `podman` instead of `docker`.
 
-**Note**: Make sure no container is using the volume before backup or restore, otherwise your data might be damaged. See [Miscellaneous](#miscellaneous) for instructions.
+> [!WARNING]
+> Make sure no container is using the volume before backup or restore, otherwise your data might be damaged. See [Miscellaneous](#miscellaneous) for instructions.
 
-**Note**: When using docker-compose, make sure to backup and restore volume labels. See [Miscellaneous](#miscellaneous) for more information.
+> [!TIP]
+> When using docker-compose, make sure to backup and restore volume labels. See [Miscellaneous](#miscellaneous) for more information.
 
 ## Backup
 
@@ -20,9 +22,11 @@ For example:
 
 will archive volume named `some_volume` to `some_archive.tar.bz2` archive file.
 
-**Note**: `--log-driver none` option is necessary to avoid storing an entire backup in a temporary stdout JSON file. More info in [Docker logging documentation](https://docs.docker.com/config/containers/logging/configure/) and in [this issue](https://github.com/loomchild/volume-backup/issues/39).
+> [!NOTE]
+> The `--log-driver none` option is necessary to avoid storing an entire backup in a temporary stdout JSON file. More info in [Docker logging documentation](https://docs.docker.com/config/containers/logging/configure/) and in [this issue](https://github.com/loomchild/volume-backup/issues/39).
 
-**WARNING**: This method should not be used under PowerShell on Windows as no usable backup will be generated.
+> [!NOTE]
+> This method should not be used under PowerShell on Windows as no usable backup will be generated.
 
 ### Backup to a file (deprecated)
 
@@ -48,8 +52,11 @@ For example:
 
 will clean and restore volume named `some_volume` from `some_archive.tar.bz2` archive file.
 
-**Note**: Don't forget the `-i` switch for interactive operation.
-**Note** Restore will fail if the target volume is not empty (use `-f` flag to override).
+> [!NOTE]
+> Don't forget the `-i` switch for interactive operation.
+
+> [!NOTE]
+> Restore will fail if the target volume is not empty (use `-f` flag to override).
 
 ### Restore from a file (deprecated)
 
@@ -74,7 +81,7 @@ will clean and restore volume named `some_volume` from `/tmp/some_archive.tar.bz
     ```
     docker pull ghcr.io/loomchild/volume-backup
     ```
-    **Note**: you'll need to write `ghcr.io/loomchild/volume-backup` instead of just `loomchild/volume-backup` when running the utility.
+    Then write `ghcr.io/loomchild/volume-backup` instead of just `loomchild/volume-backup` when running the utility.
 
 1. Find all containers using a volume (to stop them before backing-up)
     ```
@@ -105,6 +112,7 @@ will clean and restore volume named `some_volume` from `/tmp/some_archive.tar.bz
     ```
     docker run -v [volume-name]:/volume --rm --log-driver none loomchild/volume-backup backup | ssh [receiver] docker run -i -v [volume-name]:/volume --rm loomchild/volume-backup restore
     ```
-    **Note**: In case there are no traffic limitations between the hosts you can trade CPU time for bandwidth by turning off compression via `-c none` option.
+    > [!TIP]
+    > In case there are no traffic limitations between the hosts you can trade CPU time for bandwidth by turning off compression via `-c none` option.
 
 1. Volume labels are not backed-up or restored automatically, but they might be required for your application to work (e.g. when using `docker-compose`). If you need to preserve them, create a label backup file as follows: `docker inspect [volume-name] -f "{{json .Labels}}" > labels.json`. When restoring your data, target volume needs to be created manually with labels before launching the restore script: `docker volume create --label "label1" --label "label2" [volume-name]`.
