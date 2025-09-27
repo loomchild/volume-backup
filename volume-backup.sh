@@ -4,6 +4,7 @@ usage() {
   >&2 echo "Usage: volume-backup <backup|restore> [options]. Reads from stdin and writes to stdout. Can also read/write files (deprecated)."
   >&2 echo ""
   >&2 echo "Options:"
+  >&2 echo "  -a allow backup of empty volumes (only for backup operation)"
   >&2 echo "  -c <algorithm> chooose compression algorithm: bz2 (default), gz, xz, pigz, zstd and 0 (none)"
   >&2 echo "  -e <glob> exclude files or directories (only for backup operation)"
   >&2 echo "  -f force overwrite even if target volume is not empty during restore"
@@ -13,8 +14,10 @@ usage() {
 
 backup() {
     if [ -z "$(ls -A /volume)" ]; then
-       >&2 echo "Volume is empty or missing, check if you specified a correct name"
-       exit 1
+       if [ -z "$ALLOW_EMPTY" ]; then
+           >&2 echo "Volume is empty or missing, check if you specified a correct name"
+           exit 1
+       fi
     fi
 
     if ! [ "$ARCHIVE" == "-" ]; then
@@ -47,14 +50,22 @@ OPERATION=$1
 TAROPTS=()
 COMPRESSION="bz2"
 FORCE=""
+ALLOW_EMPTY=""
 
 OPTIND=2
 
-while getopts "h?vfc:e:x:" OPTION; do
+while getopts "h?avfc:e:x:" OPTION; do
     case "$OPTION" in
     h|\?)
         usage
         exit 0
+        ;;
+    a)
+        if [ "$OPERATION" != "backup" ]; then
+          usage
+          exit 1
+        fi
+        ALLOW_EMPTY=1
         ;;
     c)  
         if [ -z "$OPTARG" ]; then

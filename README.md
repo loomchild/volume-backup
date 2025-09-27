@@ -96,6 +96,11 @@ will clean and restore volume named `some_volume` from `/tmp/some_archive.tar.bz
     docker run -v [volume-name]:/volume --rm --log-driver none loomchild/volume-backup backup -e [excluded-glob] > [archive-path]
     ```
 
+1. Allow backup of empty volumes using `-a` flag
+    ```
+    docker run -v [volume-name]:/volume --rm --log-driver none loomchild/volume-backup backup -a > [archive-path]
+    ```
+
 1. Use different compression algorithm for better performance
     ```
     docker run -v [volume-name]:/volume --rm --log-driver none loomchild/volume-backup backup -c pigz > [archive-path]
