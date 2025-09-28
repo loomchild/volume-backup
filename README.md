@@ -59,7 +59,7 @@ will clean and restore volume named `some_volume` from `some_archive.tar.bz2` ar
 > Don't forget the `-i` switch for interactive operation.
 
 > [!NOTE]
-> Backup will fail if the **source** volume **is** empty. Restore will fail if the **target** volume **is not** empty. You can use the `-f` flag to override this.
+> Backup will fail if the source volume is empty. Restore will fail if the target volume is not empty. You can use the `-f` flag to override this.
 
 ### Restore from a file (deprecated)
 
