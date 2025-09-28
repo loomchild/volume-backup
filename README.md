@@ -59,7 +59,7 @@ will clean and restore volume named `some_volume` from `some_archive.tar.bz2` ar
 > Don't forget the `-i` switch for interactive operation.
 
 > [!NOTE]
-> Restore will fail if the target volume is not empty (use `-f` flag to override).
+> Backup will fail if the **source** volume **is** empty. Restore will fail if the **target** volume **is not** empty. You can use the `-f` flag to override this.
 
 ### Restore from a file (deprecated)
 
@@ -94,11 +94,6 @@ will clean and restore volume named `some_volume` from `/tmp/some_archive.tar.bz
 1. Exclude some files from the backup and send the archive to stdout
     ```
     docker run -v [volume-name]:/volume --rm --log-driver none loomchild/volume-backup backup -e [excluded-glob] > [archive-path]
-    ```
-
-1. Allow backup of empty volumes using `-a` flag
-    ```
-    docker run -v [volume-name]:/volume --rm --log-driver none loomchild/volume-backup backup -a > [archive-path]
     ```
 
 1. Use different compression algorithm for better performance
