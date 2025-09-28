@@ -6,8 +6,7 @@ usage() {
   >&2 echo "Options:"
   >&2 echo "  -c <algorithm> chooose compression algorithm: bz2 (default), gz, xz, pigz, zstd and 0 (none)"
   >&2 echo "  -e <glob> exclude files or directories (only for backup operation)"
-  >&2 echo "  -f (when backing up) allow backup of empty volumes"
-  >&2 echo "  -f (when restoring) force overwrite even if target volume is not empty during restore"
+  >&2 echo "  -f Allow backing up empty volume or restoring into non-empty volume, overwriting its contents"
   >&2 echo "  -x <args> pass additional arguments to the Tar utility"
   >&2 echo "  -v verbose"
 }
